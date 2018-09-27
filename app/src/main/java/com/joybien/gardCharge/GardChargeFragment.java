@@ -1402,7 +1402,7 @@ import static com.joybien.gardCharge.MainActivity.nav_Menu;
                 bTM.setImageResource((timerStatus == 1) ? R.drawable.timer : R.drawable.timerx);
                 timerImgV.setTag((timerStatus == 1)? "on":"off");
             }
-            conLi = (float)Li*2/1000;
+            conLi = (float)Li * 4 /1000;
             lowButton.setText(String.format("%.2f",conLi));
             if(Le == 1){
                 check = true;

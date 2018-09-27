@@ -204,7 +204,7 @@ public class SettingParaFragment extends Fragment {
                         //sbIbf.setProgress((int) ((currentValue-0.1) * 10));
                         sbIbf.setProgress((int) ((currentValue) * 10));
 
-                        if(liValue/1000 == currentValue){
+                        if(liValue/1000 == currentValue ){
                             currentValue = (float) (Math.ceil(liValue / 1000 * 10)) / 10;
                             currentValue += 0.1;
                             sbIbf.setProgress((int) ((currentValue-0.1) * 10));
@@ -246,7 +246,7 @@ public class SettingParaFragment extends Fragment {
             public void onClick(View v) {
                 GardChargeFragment.info0x47FlagSetByBLEService(true);
                 byte[] x = new byte[4];
-                x[0] = (byte)((int) liValue/2);
+                x[0] = (byte)((int) liValue/4);
                 x[1] = (byte)(ltValue);
                 x[2] = (byte) 1;
                 x[3] = 0;
@@ -280,9 +280,10 @@ public class SettingParaFragment extends Fragment {
             @Override
             //SeekBar Value Change
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                liValue = progress * 2;
+                liValue = progress * 4;  //4 for 1A
                 String sString = String.format("%.2f" + "A", liValue/1000);
                 String vString = String.format("%.2f" + "A", currentValue);
+
                 txtLi.setText(sString);
                 Log.v("check","liValue:" + sString + "currentV:" + vString);
 
@@ -290,9 +291,9 @@ public class SettingParaFragment extends Fragment {
 
                     currentValue = (float)(Math.ceil(liValue/1000*10))/10;
                     sbIbf.setProgress((int) ((currentValue-0.1) * 10));
-
-                    if(liValue/1000 == currentValue){
-                        currentValue = (float) (Math.ceil(liValue / 1000 * 10)) / 10;
+                    if(liValue/1000 == currentValue || liValue/1000 + 0.001 > currentValue){
+                   // if(liValue/1000 == currentValue){
+                        currentValue = (float) (Math.ceil(liValue/1000*10)) / 10;
                         currentValue += 0.1;
                         sbIbf.setProgress((int) ((currentValue - 0.1) * 10));
 
@@ -301,7 +302,6 @@ public class SettingParaFragment extends Fragment {
                         currentValue = (float)(Math.ceil(liValue/1000*10))/10;
                         currentValue += 0.1;
                         sbIbf.setProgress((int) ((currentValue-0.1) * 10));
-
                     }
                     txtCurrent.setText(String.format("%.1f" + "A", currentValue));
                 }
